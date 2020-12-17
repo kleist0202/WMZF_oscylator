@@ -1,5 +1,7 @@
 import sys
 import os
+from compute_functions import Amplitudy, Energie
+from plots_module import *
 
 
 def load_from_file(file_name):
@@ -100,7 +102,17 @@ def menu(lepkosci):
             os.system("clear")
 
         elif wybor == 3:
-            pass
+            do_wykresow = {}
+
+            print('wpisz promień kuli R')
+            R=float(input())
+            print('wpisz masę kuli m ')
+            m=float(input())
+
+            for i in lista_wybranych:
+                do_wykresow[i] = Amplitudy(lepkosci[i], m, R)
+            
+            make_amplitude_plot(do_wykresow)
 
         elif wybor == 4:
             sys.exit()
