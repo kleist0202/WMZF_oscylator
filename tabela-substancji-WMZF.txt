@@ -1,5 +1,5 @@
 substancja                                     lepkość Pa*s 
-wodór                                             8.9e-6 
+wodor                                             8.9e-6 
 azot                                              17.76e-6
 tlen                                              20.64e-6
 fluor                                             23.16e-6
@@ -15,7 +15,7 @@ hexafluoroetan                                    14e-6
 powietrze                                         18.46e-6
 amoniak                                           10.07e-6
 trifluorek_azotu                                  17.11e-6
-dwutlenek_węgla                                   14.9e-6
+dwutlenek_wegla                                   14.9e-6
 tlenek_azotu                                      18.9e-6
 podtlenek_azotu                                   14.9e-6
 hexafluorek_siarki                                15.23e-6
@@ -31,12 +31,10 @@ woda                                              890e-6
 1-propanol                                        1945e-6
 2-propanol                                        2052e-6
 mleko                                             2120e-6
-miód                                              6e-6
-ketchup                                           125e-6
 benzen                                            604e-6
 aceton                                            302e-6
 brom                                              944e-6
-Hydrazyna                                         876e-6
+hydrazyna                                         876e-6
 glicerol                                          934e-6 
 chloroform                                        0.53e-6
-fosforowodór                                      0.11e-6
+fosforowodor                                      11e-6

@@ -16,7 +16,12 @@ def load_from_file(file_name):
 
 def menu(lepkosci):
 
-    os.system("clear")
+    if os.name == "nt":
+        wyczysc = "cls"
+    else:
+        wyczysc = "clear"
+
+    os.system(wyczysc)
 
     ilosc_substancji = len(lepkosci)
 
@@ -35,18 +40,18 @@ def menu(lepkosci):
         try:
             wybor = int(input("Co chcesz zrobic? (1-4): "))
         except ValueError:
-            os.system("clear")
+            os.system(wyczysc)
             print("Musisz podac liczbe!")
             continue
 
-        os.system("clear")
+        os.system(wyczysc)
         
         ilosc_wybranych = len(lista_wybranych) 
         
-        if wybor == 1:
+        if wybor == 1: ########## dodaj substancje ##########
 
             if ilosc_wybranych >= 5:
-                os.system("clear")
+                os.system(wyczysc)
                 print("Limit przekroczony!")
                 continue
 
@@ -58,63 +63,119 @@ def menu(lepkosci):
             try:
                 wybrany_nr = int(input("Wybierz numer substancji sposrod listy (1-{}):".format(ilosc_substancji)))
             except ValueError:
-                os.system("clear")
+                os.system(wyczysc)
                 print("Muisz podac liczbe!")
                 continue
 
             if wybrany_nr < 1 or wybrany_nr > ilosc_substancji:
-                os.system("clear")
+                os.system(wyczysc)
                 print("Nie ma takiego numeru!")
                 continue
             
             if lista_substancji[wybrany_nr - 1] in lista_wybranych:
-                os.system("clear")
+                os.system(wyczysc)
                 print("Substancja zostala juz wybrana!")
                 continue
 
             lista_wybranych.append(lista_substancji[wybrany_nr - 1])
 
-            os.system("clear")
+            os.system(wyczysc)
 
-        elif wybor == 2:
+        elif wybor == 2: ########## usun substancje ##########
 
             if ilosc_wybranych < 1:
-                os.system("clear")
+                os.system(wyczysc)
                 print("Nic nie wybrales!")
                 continue
 
-            print("Wybrane substancje: ({})".format(lista_wybranych))
+            for num, value in enumerate(lista_wybranych):
+                print("{}. {} ".format(num + 1, value))
+            
+            #print("Wybrane substancje: ({})".format(lista_wybranych))
 
             try:
                 usun = int(input("Ktora substancje chcesz usunac?: "))
             except ValueError:
-                os.system("clear")
+                os.system(wyczysc)
                 print("Musisz podac liczbe!")
                 continue
 
             if usun < 1 or usun > ilosc_wybranych:
-                os.system("clear")
+                os.system(wyczysc)
                 print("Nie ma takiego numeru!")
                 continue
 
             lista_wybranych.pop(usun - 1)
 
-            os.system("clear")
+            os.system(wyczysc)
 
-        elif wybor == 3:
-            do_wykresow = {}
+        elif wybor == 3: ########## pokaz wykresy ##########
 
-            print('wpisz promień kuli R')
-            R=float(input())
-            print('wpisz masę kuli m ')
-            m=float(input())
+            do_wykresow_ampl = {}
+            do_wykresow_ener = {}
+
+            if len(lista_wybranych) == 0: 
+                os.system(wyczysc)
+                print("Nie wybrales substancji!")
+                continue
+
+            ########### promien ###########
+            print('Wpisz promień kuli (w metrach): ')
+            try:
+                R = float(input())
+            except ValueError:
+                os.system(wyczysc)
+                print("Musisz podac liczbe!")
+                continue
+
+            if R <= 0:
+                os.system(wyczysc)
+                print("Liczba musi byc dodatnia!")
+                continue
+
+            ########### masa ############
+            print('Wpisz masę kuli (w kilogramach): ')
+            try:
+                m = float(input())
+            except ValueError:
+                os.system(wyczysc)
+                print("Musisz podac liczbe!")
+                continue
+
+            if m <= 0:
+                os.system(wyczysc)
+                print("Liczba musi byc dodatnia!")
+                continue
+            
+            ########### czas maksymalny ###########
+            print('Wpisz czas maksymalny (w sekundach): ')
+            try:
+                t_max = int(input())
+            except ValueError: 
+                os.system(wyczysc)
+                print("Musisz podać liczbe!")
+                continue
+
+            if t_max <= 0:
+                os.system(wyczysc)
+                print("Liczba musi byc dodatnia!")
+                continue
+
+            ########### sprezystosc ###########
+            k = 0.1 
 
             for i in lista_wybranych:
-                do_wykresow[i] = Amplitudy(lepkosci[i], m, R)
-            
-            make_amplitude_plot(do_wykresow)
+                do_wykresow_ampl[i] = Amplitudy(lepkosci[i], m, R, k, t_max)
 
-        elif wybor == 4:
+            for i in lista_wybranych:
+                do_wykresow_ener[i] = Energie(lepkosci[i], m, R, k, t_max)
+            
+            make_plot(do_wykresow_ampl, do_wykresow_ener)
+
+            os.system(wyczysc)
+
+        elif wybor == 4: ########## wyjdz ##########
+
             sys.exit()
 
         else:

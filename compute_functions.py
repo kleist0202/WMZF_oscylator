@@ -1,31 +1,23 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Dec 10 22:01:13 2020
-
-@author: Michal
-"""
 import numpy as np
 
-def Amplitudy(l, m, R):
-    t=np.arange(0,10000,1)
-    A0=20
-    #print('wpisz promień kuli R')
-    #R=float(input())
-    #print('wpisz masę kuli m ')
-    #m=float(input())
-    A=A0*np.e**(-3*np.pi*R*l*t/m)
-    return t, A 
+def Amplitudy(l, m, R, k, t_max):
+    t = np.linspace(0, t_max, t_max*4)
+    #t = np.linspace(0, 48 * np.pi, 600)
+    A0 = 1
+    w0 = np.sqrt(k/m)
+    b = (6*np.pi*R*l)/(2*m)
+    w = np.sqrt(w0**2 - b**2)
+    x = A0*np.e**(-3*np.pi*R*l*t/m)*np.cos(w*t)
+    print(x)
 
-def Energie(l):
-    t=np.arange(0,10000,1)
-    A0=20
-    print('wpisz promień kuli R')
-    R=float(input())
-    print('wpisz masę kuli m ')
-    m=float(input())
-    print('wpis współczynnik sprężystosci k')
-    k=float(input())
-    E=0.5*k*A0**2*np.e**(-6*np.pi*R*l*t/m)
+    return t, x
+
+def Energie(l, m, R, k, t_max):
+
+    t = np.linspace(0, t_max, t_max*4)
+    A0 = 1
+    E = 0.5*k*A0**2*np.e**(-6*np.pi*R*l*t/m)
+
     return t, E
    
     
